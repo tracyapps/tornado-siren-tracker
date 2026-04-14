@@ -30,6 +30,15 @@ npm start
 
 Then open [http://localhost:3000](http://localhost:3000).
 
+## Vercel
+
+This repo is set up for Vercel using:
+
+- Static assets from `public/`
+- Serverless endpoints in `api/`
+
+The local dev server lives in `dev-server.js` and should not be used as the Vercel deployment entrypoint.
+
 ## Data sources
 
 - Brown County public ArcGIS siren layer
