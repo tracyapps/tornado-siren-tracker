@@ -2,6 +2,9 @@ const map = L.map("map", {
   zoomControl: true
 }).setView([44.75, -89.8], 7);
 
+map.createPane("radar-pane");
+map.getPane("radar-pane").style.zIndex = 350;
+
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 18,
   attribution: "&copy; OpenStreetMap contributors"
@@ -9,6 +12,19 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 const sirenLayer = L.layerGroup().addTo(map);
 const warningLayer = L.layerGroup().addTo(map);
+const radarLayer = L.tileLayer.wms(
+  "https://opengeo.ncep.noaa.gov/geoserver/conus/conus_bref_qcd/wms",
+  {
+    attribution: "Radar &copy; NOAA/NCEP MRMS",
+    format: "image/png",
+    layers: "conus_bref_qcd",
+    opacity: 0.45,
+    pane: "radar-pane",
+    styles: "radar_reflectivity",
+    transparent: true,
+    version: "1.3.0"
+  }
+);
 let hasFitMap = false;
 
 function formatTime(value) {
@@ -33,6 +49,31 @@ function escapeHtml(value) {
 
 function setText(id, value) {
   document.getElementById(id).textContent = value;
+}
+
+function initializeRadarControls() {
+  const enabledInput = document.getElementById("radar-enabled");
+  const opacityInput = document.getElementById("radar-opacity");
+
+  function syncRadarLayer() {
+    const shouldShow = enabledInput.checked;
+    const opacity = Number(opacityInput.value) / 100;
+
+    radarLayer.setOpacity(opacity);
+    opacityInput.disabled = !shouldShow;
+
+    if (shouldShow) {
+      if (!map.hasLayer(radarLayer)) {
+        radarLayer.addTo(map);
+      }
+    } else if (map.hasLayer(radarLayer)) {
+      map.removeLayer(radarLayer);
+    }
+  }
+
+  enabledInput.addEventListener("change", syncRadarLayer);
+  opacityInput.addEventListener("input", syncRadarLayer);
+  syncRadarLayer();
 }
 
 function renderAssumptions(items) {
@@ -226,4 +267,5 @@ async function refresh() {
 }
 
 refresh();
+initializeRadarControls();
 window.setInterval(refresh, 60_000);

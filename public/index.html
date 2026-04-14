@@ -86,6 +86,17 @@
             </div>
           </div>
 
+          <div class="radar-panel" aria-label="Radar overlay controls">
+            <label class="radar-toggle">
+              <input id="radar-enabled" type="checkbox" />
+              <span>NOAA radar</span>
+            </label>
+            <label class="radar-opacity">
+              <span>Opacity</span>
+              <input id="radar-opacity" type="range" min="15" max="90" step="5" value="45" />
+            </label>
+          </div>
+
           <div id="map" aria-label="Map of tornado sirens in Wisconsin"></div>
         </section>
 
