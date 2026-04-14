@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wisconsin Tornado Siren Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="hero">
+          <p class="eyebrow">Wisconsin MVP</p>
+          <h1>Tornado Siren Tracker</h1>
+          <p class="hero-copy">
+            Public siren telemetry usually is not available, so this app shows sirens that are
+            <strong>likely active</strong> because they fall inside an active Wisconsin tornado-warning
+            polygon.
+          </p>
+        </div>
+
+        <section class="panel">
+          <h2>Active Warnings</h2>
+          <div id="warning-list" class="warning-list">
+            <p class="muted">Checking current Wisconsin tornado warnings...</p>
+          </div>
+        </section>
+
+        <section class="panel summary-panel">
+          <h2>Current Snapshot</h2>
+          <div class="summary-grid">
+            <div class="metric">
+              <span class="metric-label">Likely active</span>
+              <strong id="active-count">-</strong>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Loaded sirens</span>
+              <strong id="total-count">-</strong>
+            </div>
+            <div class="metric">
+              <span class="metric-label">WI tornado warnings</span>
+              <strong id="warning-count">-</strong>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Data sources</span>
+              <strong id="coverage-count">-</strong>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main-column">
+        <section class="map-wrap">
+          <div class="status-strip">
+            <span class="live-pill"><span class="live-dot"></span>Live</span>
+            <span id="status-updated">Updating...</span>
+            <span id="status-warning-brief">Checking warnings...</span>
+          </div>
+
+          <div class="map-legend" aria-label="Map legend">
+            <div class="legend-item">
+              <span class="legend-icon legend-icon-active">
+                <span class="legend-core">!</span>
+                <span class="legend-wave legend-wave-left"></span>
+                <span class="legend-wave legend-wave-right"></span>
+              </span>
+              <span class="legend-label">Likely active</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon legend-icon-inactive">
+                <span class="legend-core"></span>
+              </span>
+              <span class="legend-label">Likely inactive</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon legend-icon-warning">
+                <span class="legend-warning-shape">!</span>
+              </span>
+              <span class="legend-label">Warning area</span>
+            </div>
+          </div>
+
+          <div id="map" aria-label="Map of tornado sirens in Wisconsin"></div>
+        </section>
+
+        <footer class="footer-panels">
+          <section class="panel">
+            <h2>Assumptions</h2>
+            <ul class="note-list" id="assumptions"></ul>
+          </section>
+
+          <section class="panel">
+            <h2>Coverage</h2>
+            <p class="coverage-note" id="coverage-note"></p>
+            <div id="source-list" class="source-list"></div>
+          </section>
+        </footer>
+      </main>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

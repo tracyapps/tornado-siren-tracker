@@ -1,0 +1,9 @@
+{
+  "name": "tornado-siren-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wisconsin-first tornado siren map with likely-active status based on NWS tornado warnings.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
